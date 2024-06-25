@@ -432,3 +432,122 @@ select * from vendedor;
 select * from fornecedor;
 select * from transportadora;
 select * from produto;
+	
+--Tabela Pedidos
+
+create table pedido(
+	idpedido integer not null,
+	idcliente integer not null,
+	idtransportadora integer,
+	idvendedor integer not null,
+	data_pedido date not null,
+	valor numeric(10, 2) not null,
+
+	constraint pk_pdd_idpedido primary key (idpedido),
+	constraint fk_pdd_idclinente foreign key (idcliente) references cliente (idcliente),
+	constraint fk_pdd_idtransportadora foreign key (idtransportadora) references transportadora (idtransportadora),
+	constraint fk_pdd_idvendedor foreign key (idvendedor) references vendedor (idvendedor)
+);
+
+insert into pedido(idpedido, idcliente, idtransportadora, idvendedor, data_pedido, valor) values (1,1,1,1,'2008-04-01',1300);
+insert into pedido(idpedido, idcliente, idtransportadora, idvendedor, data_pedido, valor) values (2,1,1,1,'2008-04-01',500);
+insert into pedido(idpedido, idcliente, idtransportadora, idvendedor, data_pedido, valor) values (3,11,2,5,'2008-04-02',300);
+insert into pedido(idpedido, idcliente, idtransportadora, idvendedor, data_pedido, valor) values (4,8,1,7,'2008-04-05',1000);
+insert into pedido(idpedido, idcliente, idtransportadora, idvendedor, data_pedido, valor) values (5,9,2,6,'2008-04-06',200);
+insert into pedido(idpedido, idcliente, idtransportadora, idvendedor, data_pedido, valor) values (6,10,1,6,'2008-04-06',1985);
+insert into pedido(idpedido, idcliente, idtransportadora, idvendedor, data_pedido, valor) values (7,3,1,7,'2008-04-06',800);
+insert into pedido(idpedido, idcliente, idtransportadora, idvendedor, data_pedido, valor) values (8,3,null,7,'2008-04-06',175);
+insert into pedido(idpedido, idcliente, idtransportadora, idvendedor, data_pedido, valor) values (9,12,null,8,'2008-04-07',1300);
+insert into pedido(idpedido, idcliente, idtransportadora, idvendedor, data_pedido, valor) values (10,6,1,8,'2008-04-10',200);
+insert into pedido(idpedido, idcliente, idtransportadora, idvendedor, data_pedido, valor) values (11,15,2,1,'2008-04-15',300);
+insert into pedido(idpedido, idcliente, idtransportadora, idvendedor, data_pedido, valor) values (12,15,2,5,'2008-04-20',500);
+insert into pedido(idpedido, idcliente, idtransportadora, idvendedor, data_pedido, valor) values (13,9,1,7,'2008-04-20',350);
+insert into pedido(idpedido, idcliente, idtransportadora, idvendedor, data_pedido, valor) values (14,2,1,5,'2008-04-23',300);
+insert into pedido(idpedido, idcliente, idtransportadora, idvendedor, data_pedido, valor) values (15, 11,null,5,'2008-04-25',200);
+
+select * from pedido;
+
+create table pedido_produto(
+	idpedido integer not null,
+	idproduto integer not null,
+	quantidade integer not null,
+	valor_unitario float not null,
+
+	constraint pk_pdp_idpedidoproduto primary key (idpedido, idproduto),
+	constraint fk_pdp_idpedido foreign key (idpedido) references pedido (idpedido),
+	constraint fk_pdp_idproduto foreign key (idproduto) references produto (idproduto)
+);
+
+insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values(1,1,1,800);
+insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values(1,2,1,500);
+insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values(2,2,1,500);
+Insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values (3,4,2,150);
+Insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values (4,1,1,800);
+Insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values (4,3,1,200);
+Insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values (5,3,1,200);
+Insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values (6,1,2,800);
+Insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values (6,7,1,35);
+Insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values (6,5,1,200);
+Insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values (6,4,1,150);
+Insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values (7,1,1,800);
+Insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values (8,7,5,35);
+Insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values (9,1,1,800);
+Insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values (9,2,1,500);
+Insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values (10,5,1,200);
+Insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values (11,5,1,200);
+Insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values (11,6,1,100);
+Insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values (12,2,1,500);
+Insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values (13,3,1,200);
+Insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values (13,4,1,150);
+Insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values (14,6,3,100);
+Insert into pedido_produto (idpedido,idproduto,quantidade,valor_unitario) values (15,3,1,200);
+
+select * from pedido_produto;
+
+select * from cliente;
+select * from vendedor;
+select * from municipio;
+select * from complemento;
+select * from transportadora;
+
+--exercicios
+
+select nome from vendedor order by nome asc;
+
+select * from produto where valor > 200 order by valor asc;
+
+select nome, valor, (valor + (valor * 0.10)) from produto;
+
+select nome from municipio where iduf = 5;
+
+select * from pedido where data_pedido between '2008-04-10' and '2008-04-25';
+
+select * from pedido where valor between 1000 and 1500;
+
+select * from pedido where valor not between 100 and 500;
+
+select * from pedido where idvendedor = 1 order by valor desc;
+
+select * from pedido where idvendedor = 5  or idvendedor = 7;
+
+select * from pedido where idcliente = 1 order by valor asc;
+
+select * from pedido where idcliente = 15 and idvendedor = 1;
+
+select * from cliente where idmunicipio = 1 or idmunicipio = 9 ;
+
+select * from cliente where idmunicipio != 1 and idmunicipio != 9 ;
+
+select * from cliente where logradouro is null;
+
+select * from vendedor where nome like 'S%';
+
+select * from vendedor where nome like '%a';
+
+select * from municipio where nome like 'P%' and iduf = 2 ;
+
+select * from transportadora where logradouro is not null;
+
+select * from pedido_produto where idpedido = 1;
+
+select * from pedido_produto where idpedido = 6 or idpedido = 10;
