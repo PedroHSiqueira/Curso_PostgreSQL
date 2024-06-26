@@ -551,3 +551,29 @@ select * from transportadora where logradouro is not null;
 select * from pedido_produto where idpedido = 1;
 
 select * from pedido_produto where idpedido = 6 or idpedido = 10;
+
+--Funções Agregadas
+
+--Media
+select avg(valor) from pedido;
+
+--Contagem 
+select count(idmunicipio) from municipio;
+
+--Contagem com filtro
+select count(idmunicipio) from municipio where iduf = 2;
+
+--Max
+select max(valor) from pedido;
+
+--Min
+select min(valor) from pedido;
+
+--Soma
+select sum(valor) from pedido;
+
+--Group By
+select idcliente, sum(valor) from pedido group by idcliente;
+
+--Group by com filtro
+select idcliente, sum(valor) from pedido group by idcliente having sum(valor) > 500;
