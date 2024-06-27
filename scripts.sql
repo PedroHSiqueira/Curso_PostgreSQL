@@ -577,3 +577,104 @@ select idcliente, sum(valor) from pedido group by idcliente;
 
 --Group by com filtro
 select idcliente, sum(valor) from pedido group by idcliente having sum(valor) > 500;
+
+
+--Joins
+
+--Left Outer Join
+select
+	cliente.nome,
+	profissao.nome 
+from 
+	cliente 
+left outer join 
+	profissao on cliente.idprofissao = profissao.idprofissao; 
+
+--Inner Join
+select
+	cliente.nome,
+	profissao.nome 
+from 
+	cliente 
+inner join 
+	profissao on cliente.idprofissao = profissao.idprofissao; 
+
+--Exercicios Joins
+
+--1
+select 
+	cln.nome, 
+	profissao.nome as Profissao,
+	nacionalidade.nome as Nacionalidade,
+	cln.logradouro as Logradouro,
+	cln.numero as Numero,
+	complemento.nome as Complemento,
+	bairro.nome as Bairro,
+	municipio.nome as Municipio,
+	uf.nome as "Unidade Federativa"
+from 
+	cliente as cln
+left outer join
+	profissao on cln.idprofissao = profissao.idprofissao
+left outer join
+	nacionalidade on cln.idnacionalidade = nacionalidade.idnacionalidade
+left outer join
+	complemento on cln.idcomplemento = complemento.idcomplemento
+left outer join 
+	bairro on cln.idbairro = bairro.idbairro
+left outer join 
+	municipio on cln.idmunicipio = municipio.idmunicipio
+left outer join
+	uf on municipio.iduf = uf.iduf;
+
+--2
+select 
+	pdt.nome,
+	pdt.valor,
+	fornecedor.nome as Fornecedor
+from 
+	produto as pdt
+left outer join 
+	fornecedor on pdt.idfornecedor = fornecedor.idfornecedor;
+
+--3
+select 
+	tpt.nome,
+	municipio.nome as municipio
+from 
+	transportadora as tpt
+left outer join
+	municipio on tpt.idmunicipio = municipio.idmunicipio
+
+--4 
+
+select 
+	pedido.data_pedido,
+	pedido.valor,
+	cliente.nome as cliente,
+	transportadora.nome as transportadora,
+	vendedor.nome as vendedor
+from 
+	pedido
+left outer join
+	cliente on pedido.idcliente = cliente.idcliente
+left outer join 
+	transportadora on pedido.idtransportadora = transportadora.idtransportadora
+left outer join
+	vendedor on pedido.idvendedor = vendedor.idvendedor;
+
+--5
+
+select * from pedido_produto;
+
+select 
+	produto.nome,
+	pdpt.quantidade,
+	pdpt.valor_unitario
+from 
+	pedido_produto as pdpt
+left outer join 
+	produto on pdpt.idproduto = produto.idproduto
+
+
+		
