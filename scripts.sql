@@ -676,5 +676,90 @@ from
 left outer join 
 	produto on pdpt.idproduto = produto.idproduto
 
+--Comandos Adicionais
 
-		
+--Extract
+select data_pedido, extract(day from data_pedido) from pedido;
+
+--Substring
+select nome, substring(nome from 1 for 5), substring(nome, 2) from cliente;
+
+--UPPER case
+select nome,upper(nome) from cliente;
+
+--lower case
+select nome,lower(nome) from cliente;
+
+--Coalense
+select nome,cpf, coalesce(cpf, 'Não informado') from cliente;
+
+--Case
+select 
+	case sigla
+		when 'PR' then 'Paraná'
+		when 'SC' then 'Santa Catarina'
+	else 'Outros'
+	end as uf
+from 
+	uf;
+
+
+--Subconsultas -- Selects Aninhados
+
+select 
+	data_pedido,
+	valor
+from 
+	pedido
+where
+	valor > (select avg(valor) from pedido);
+
+--exemplo com count
+
+select
+	pedido.data_pedido,
+	pedido.valor,
+	(select sum(quantidade) from pedido_produto where pedido_produto.idpedido = pedido.idpedido)
+from pedido;
+
+--exemplo com update
+
+update pedido set valor = valor + ((valor * 5) / 100) where valor > (select avg(valor) from pedido);
+
+--Exercicios Sub-Consultas
+
+--1
+select * from transportadora;
+select nome from cliente where idmunicipio = (select idmunicipio from cliente where nome = 'Manoel') and nome != 'Manoel';
+
+--2
+select data_pedido,valor from pedido where valor < (select avg(valor) from pedido);
+
+--3
+select
+	pedido.data_pedido,
+	pedido.valor,
+	cliente.nome as cliente,
+	vendedor.nome as vendedor
+from 
+	pedido
+left outer join
+	cliente on pedido.idcliente = cliente.idcliente
+left outer join 
+	vendedor on pedido.idvendedor = vendedor.idvendedor
+where 
+	(select sum(quantidade) from pedido_produto where pedido_produto.idpedido = pedido.idpedido) > 2;
+
+--4
+select nome from cliente where idmunicipio = (select idmunicipio from transportadora where nome = 'BS. Transportes');
+
+--5
+select 
+	cliente.nome,
+	municipio.nome
+from 
+	cliente
+left outer join 
+	municipio on cliente.idmunicipio = municipio.idmunicipio
+where
+	cliente.idmunicipio in (select distinct(idmunicipio) from transportadora)
