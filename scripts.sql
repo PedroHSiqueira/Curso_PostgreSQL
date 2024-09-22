@@ -762,4 +762,26 @@ from
 left outer join 
 	municipio on cliente.idmunicipio = municipio.idmunicipio
 where
-	cliente.idmunicipio in (select distinct(idmunicipio) from transportadora)
+	cliente.idmunicipio in (select distinct(idmunicipio) from transportadora);
+
+--Criar View
+create view cliente_profissao as 
+select cln.nome as cliente,
+prf.nome as profissao
+from cliente cln
+left outer join 
+profissao prf on cln.idprofissao = prf.idprofissao
+
+--Funções 
+select valor, concat('R$ ', round(valor, 2)) from pedido;
+
+create function formata_moeda(valor float) returns varchar(20) language plpgsql as 
+$$
+begin 
+	return concat('R$ ', round(cast(valor as numeric),2));
+end;
+$$;
+
+select valor, formata_moeda(valor) from pedido;
+
+
